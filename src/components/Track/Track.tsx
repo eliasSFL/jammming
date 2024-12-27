@@ -1,13 +1,27 @@
 // src/Track/Track.tsx
 import React from "react";
 import "./Track.css";
-import { TrackDetails } from "../Tracklist/Tracklist";
 
 interface TrackProps {
   track: TrackDetails;
+  addTrack?: (track: TrackDetails) => void;
+  removeTrack?: (track: TrackDetails) => void;
 }
+export interface TrackDetails {
+  id: number;
+  name: string;
+  artist: string;
+  album: string;
+}
+/**
+ * Track component is used in both playlist and search results
+ * If search results the track component will have a '+' button
+ * If in playlist the track component will have a 'x' button
+ * + button will add the track to the playlist
+ * x button will remove the track from the playlist
+ */
 
-const Track: React.FC<TrackProps> = ({ track }) => {
+const Track: React.FC<TrackProps> = ({ track, addTrack, removeTrack }) => {
   return (
     <div className="Track flex items-center">
       <div className="Track-information flex-grow">
@@ -16,7 +30,20 @@ const Track: React.FC<TrackProps> = ({ track }) => {
           {track.artist} | {track.album}
         </p>
       </div>
-      <button className="Track-action ml-2">+</button>
+      {/* Remove Track */}
+      {removeTrack && (
+        <button
+          className="Track-action ml-2"
+          onClick={() => removeTrack(track)}
+        >
+          x
+        </button>
+      )}
+      {addTrack && (
+        <button className="Track-action ml-2" onClick={() => addTrack(track)}>
+          +
+        </button>
+      )}
     </div>
   );
 };
