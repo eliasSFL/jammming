@@ -1,5 +1,5 @@
 // src/Playlist/Playlist.tsx
-import React, { useState } from "react";
+import React from "react";
 import Tracklist from "../Tracklist/Tracklist";
 import "./Playlist.css";
 import { TrackDetails } from "../Track/Track";
@@ -7,28 +7,22 @@ import { TrackDetails } from "../Track/Track";
 type PlaylistProps = {
   playlistTracks: TrackDetails[];
   playlistName: string;
-  updatePlaylistName: (name: string) => void;
   removeTrack: (track: TrackDetails) => void;
+  showRename: boolean;
+  setShowRename: (show: boolean) => void;
+  handlePlaylistNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onRenamePlaylist: () => void;
 };
 
 const Playlist: React.FC<PlaylistProps> = ({
   playlistTracks,
   playlistName,
-  updatePlaylistName,
   removeTrack,
+  showRename,
+  setShowRename,
+  handlePlaylistNameChange,
+  onRenamePlaylist,
 }) => {
-  const [showRename, setShowRename] = useState(false);
-  const [playlistInput, setPlaylistInput] = useState("");
-
-  const handlePlaylistNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPlaylistInput(e.target.value);
-  };
-
-  const onRenamePlaylist = () => {
-    updatePlaylistName(playlistInput);
-    setShowRename(false);
-  };
-
   return (
     <div className="Playlist">
       <div>

@@ -18,6 +18,17 @@ const App: React.FC = () => {
   const [playlistTracks, setPlaylistTracks] =
     useState<TrackDetails[]>(mockTracks);
   const [playlistName, setPlaylistName] = useState<string>("My Playlist");
+  const [showRename, setShowRename] = useState(false);
+  const [playlistInput, setPlaylistInput] = useState("");
+
+  const handlePlaylistNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaylistInput(e.target.value);
+  };
+
+  const onRenamePlaylist = () => {
+    updatePlaylistName(playlistInput);
+    setShowRename(false);
+  };
 
   const addTrack = (track: TrackDetails) => {
     setPlaylistTracks([...playlistTracks, track]);
@@ -41,8 +52,11 @@ const App: React.FC = () => {
           <Playlist
             playlistTracks={playlistTracks}
             playlistName={playlistName}
-            updatePlaylistName={updatePlaylistName}
             removeTrack={removeTrack}
+            showRename={showRename}
+            setShowRename={setShowRename}
+            handlePlaylistNameChange={handlePlaylistNameChange}
+            onRenamePlaylist={onRenamePlaylist}
           />
         )}
       </div>
