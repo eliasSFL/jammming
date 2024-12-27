@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Tracklist from "../Tracklist/Tracklist";
 import "./Playlist.css";
 import { TrackDetails } from "../Track/Track";
-import PlaylistRenaming from "./PlaylistRenaming";
 
 type PlaylistProps = {
   playlistTracks: TrackDetails[];
@@ -19,6 +18,17 @@ const Playlist: React.FC<PlaylistProps> = ({
   removeTrack,
 }) => {
   const [showRename, setShowRename] = useState(false);
+  const [playlistInput, setPlaylistInput] = useState("");
+
+  const handlePlaylistNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaylistInput(e.target.value);
+  };
+
+  const onRenamePlaylist = () => {
+    updatePlaylistName(playlistInput);
+    setShowRename(false);
+  };
+
   return (
     <div className="Playlist">
       <div>
@@ -33,10 +43,22 @@ const Playlist: React.FC<PlaylistProps> = ({
         )}
       </div>
       {showRename && (
-        <PlaylistRenaming
-          updatePlaylistName={updatePlaylistName}
-          setShowRename={setShowRename}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Playlist Name"
+            className="Playlist-input"
+            onChange={handlePlaylistNameChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onRenamePlaylist();
+              }
+            }}
+          />
+          <button className="SaveButton" onClick={onRenamePlaylist}>
+            SAVE
+          </button>
+        </div>
       )}
       <Tracklist tracks={playlistTracks} removeTrack={removeTrack} />
       <button className="SaveButton mt-4">SAVE TO SPOTIFY</button>

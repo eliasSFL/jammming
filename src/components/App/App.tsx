@@ -37,12 +37,14 @@ const App: React.FC = () => {
       <SearchBar />
       <div className="App-playlist flex flex-col">
         <SearchResults searchResults={searchResults} addTrack={addTrack} />
-        <Playlist
-          playlistTracks={playlistTracks}
-          playlistName={playlistName}
-          updatePlaylistName={updatePlaylistName}
-          removeTrack={removeTrack}
-        />
+        {playlistTracks.length > 0 && (
+          <Playlist
+            playlistTracks={playlistTracks}
+            playlistName={playlistName}
+            updatePlaylistName={updatePlaylistName}
+            removeTrack={removeTrack}
+          />
+        )}
       </div>
     </div>
   );
